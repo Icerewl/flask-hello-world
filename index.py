@@ -27,14 +27,18 @@ def get_data():
 
 @app.route('/data/search', methods=['GET'])
 def search_data():
-    query = request.args.get('model', default=None, type=str)
-    if query:
-        result = [car for car in car_data if query.lower() in car['Model'].lower()]
-        if result:
-            return jsonify(result)
-        else:
-            abort(404)  # Not found if no match
-    return jsonify(car_data)  # Return all data if no query provided
+    result = car_data
+
+    for key in request.args:
+        query_value = request.args.get(key, type=str)
+        if query_value:
+            result = [car for car in result if str(car.get(key, '')).lower() == query_value.lower()]
+
+    if result:
+        return jsonify(result)
+    else:
+        abort(404)  # Not found if no match
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))  # Get port from environment variable or default to 5000
