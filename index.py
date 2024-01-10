@@ -34,13 +34,14 @@ def search_data():
 
     for car in car_data:
         # Check if the car matches any of the query parameters
-        if any(str(car.get(key, '')).lower() == query_params[key] for key in query_params if key in car):
+        if all(str(car.get(key, '')).lower() == query_params[key] for key in query_params if key.lower() in car):
             result.append(car)
 
     if result:
         return jsonify(result)
     else:
         abort(404)  # Not found if no match
+
 
 
 
