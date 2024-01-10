@@ -1,10 +1,13 @@
 import csv
 from flask import Flask, jsonify, request, abort
-
+import os
 app = Flask(__name__)
 
+# Get the absolute path to the CSV file
+csv_file_path = os.path.join(os.path.dirname(__file__), 'ToyotaCorolla.csv')
+
 # Load the CSV data into a list of dictionaries
-with open('netlify/functions/ToyotaCorolla.csv', mode='r') as csv_file:
+with open(csv_file_path, mode='r') as csv_file:
     csv_reader = csv.DictReader(csv_file)
     car_data = list(csv_reader)
 
