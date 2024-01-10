@@ -4,7 +4,8 @@ from flask import Flask, jsonify, request, abort
 app = Flask(__name__)
 
 # Load the CSV data into a list of dictionaries
-with open('ToyotaCorolla.csv', mode='r') as csv_file:
+with open('api/ToyotaCorolla.csv', mode='r') as csv_file:
+
     csv_reader = csv.DictReader(csv_file)
     car_data = list(csv_reader)
 
