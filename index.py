@@ -34,12 +34,11 @@ def search_data():
         if query_value:
             result = [car for car in result if str(car.get(key, '')).lower() == query_value.lower()]
 
-    print("Search Results:", result)  # Temporarily added for debugging
-
     if result:
         return jsonify(result)
     else:
         abort(404)  # Not found if no match
+
 
 
 if __name__ == '__main__':
