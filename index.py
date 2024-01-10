@@ -29,17 +29,18 @@ def get_data():
 def search_data():
     result = car_data
 
-    # Convert all query parameter keys to lowercase for case-insensitive comparison
+    # Convert query parameter keys to lowercase for case-insensitive comparison
     query_params = {key.lower(): value for key, value in request.args.items()}
 
-    for key, value in query_params.items():
-        if value:
-            result = [car for car in result if str(car.get(key, '')).lower() == value.lower()]
+    for car in car_data:
+        if all(str(car.get(key, '')).lower() == value.lower() for key, value in query_params.items()):
+            result.append(car)
 
     if result:
         return jsonify(result)
     else:
         abort(404)  # Not found if no match
+
 
 
 
