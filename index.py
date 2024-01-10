@@ -34,7 +34,13 @@ def search_data():
 
     for car in car_data:
         # Check if the car matches any of the query parameters
-        if all(str(car.get(key, '')).lower() == query_params[key] for key in query_params if key.lower() in car):
+        match = True
+        for key, value in query_params.items():
+            if key in car and str(car[key]).lower() != value:
+                match = False
+                break
+
+        if match:
             result.append(car)
 
     if result:
