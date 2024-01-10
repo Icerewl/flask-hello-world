@@ -5,9 +5,12 @@ app = Flask(__name__)
 
 # Load the CSV data into a list of dictionaries
 with open('netlify/functions/ToyotaCorolla.csv', mode='r') as csv_file:
-
     csv_reader = csv.DictReader(csv_file)
     car_data = list(csv_reader)
+
+@app.route('/', methods=['GET'])  # Add this route
+def hello_world():
+    return "Hello, World!"
 
 @app.route('/data', methods=['GET'])
 def get_data():
