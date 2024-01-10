@@ -27,19 +27,26 @@ def get_data():
 
 @app.route('/data/search', methods=['GET'])
 def search_data():
-    result = car_data
+    result = []
 
     # Convert query parameter keys to lowercase for case-insensitive comparison
-    query_params = {key.lower(): value for key, value in request.args.items()}
+    query_params = {key.lower(): value.lower() for key, value in request.args.items()}
+    print("Query Params:", query_params)  # Debugging print statement
 
     for car in car_data:
-        if all(str(car.get(key, '')).lower() == value.lower() for key, value in query_params.items()):
+        # Check if each car matches all the query parameters
+        match = all(str(car.get(key, '')).lower() == query_params[key] for key in query_params if key in car)
+        print(f"Checking car: {car}, Match: {match}")  # Debugging print statement
+        if match:
             result.append(car)
+
+    print("Final Result:", result)  # Debugging print statement
 
     if result:
         return jsonify(result)
     else:
         abort(404)  # Not found if no match
+
 
 
 
